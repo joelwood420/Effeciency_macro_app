@@ -38,10 +38,18 @@ function handleMacroForm(event) {
    let macroCategory = categorizeProteinAndCarbs(protein, carbs);
    let fatCategory = categorizeFats(fat);
 
-        console.log(macroCategory);
-        console.log(fatCategory);
+ let dataToLog = {
+  "protein": protein,
+  "carbs": carbs,
+  "fat": fat,
+  "macroCategory": macroCategory,
+  "fatCategory": fatCategory
+ };
 
 
+localStorage.setItem("macroData", JSON.stringify(dataToLog));
+
+   
         
 }
 
