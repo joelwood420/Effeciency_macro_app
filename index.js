@@ -1,3 +1,4 @@
+
 document.getElementById("macroForm").addEventListener("submit", handleMacroForm);
 
 
@@ -38,21 +39,27 @@ function handleMacroForm(event) {
    let macroCategory = categorizeProteinAndCarbs(protein, carbs);
    let fatCategory = categorizeFats(fat);
 
- let dataToLog = {
+ let newEntry = {
   "protein": protein,
   "carbs": carbs,
   "fat": fat,
   "macroCategory": macroCategory,
-  "fatCategory": fatCategory
+  "fatCategory": fatCategory,
+  "date": new Date().toISOString().split('T')[0]
  };
 
+ let existingData = JSON.parse(localStorage.getItem("macroData")) || [];
+ 
+ // Ensure existingData is an array
+ if (!Array.isArray(existingData)) {
+   existingData = [];
+ }
 
-localStorage.setItem("macroData", JSON.stringify(dataToLog));
+ existingData.push(newEntry);
+ 
+ localStorage.setItem("macroData", JSON.stringify(existingData));
 
-   
-        
 }
-
 
 
 
