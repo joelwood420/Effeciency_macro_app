@@ -9,7 +9,9 @@
     <script>
       const today = new Date().toISOString().split("T")[0];
       document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("mealDate").max = today;
+        const mealDateInput = document.getElementById("mealDate");
+        mealDateInput.max = today;
+        mealDateInput.value = today; 
       });
     </script>
   </head>
@@ -19,11 +21,12 @@
     <h2>See how your breakfast effects your performance</h2>
 
     <button id="BreakfastMacros">Log your breakfast Macros</button>
-    <div id="overlay" style="display: none">
-      <div id="formContainer">
+    <div id="overlay" class="forms" style="display: none">
+      <div class="formContainer">
         <form id="macroForm">
+            <h2>Log Breakfast Macros</h2>
           <label for="mealDate">Date:</label>
-          <input type="date" id="mealDate" name="mealDate" required /><br />
+          <input type="date" id="mealDate" name="mealDate" required defaultValue={today} /><br />
           <label for="protein">Protein (g):</label>
           <input
             type="number"
@@ -40,5 +43,19 @@
         </form>
       </div>
     </div>
+
+   <button id="maxWeightBtn">Log your Max Weight Lifted</button>
+   <div id="MaxWeightoverlay" class="forms" style="display: none">
+    <div class="formContainer">
+
+    <form id="maxWeightForm">
+        <h2>Log Max Weight Lifted</h2>
+    <label for="maxWeight">Enter Max Weight lifted on bench press (kgs):</label>
+    <input type="number" id="maxWeight" name="maxWeight" required /><br /><br />
+    <button type="submit" value="Submit">Submit</button>
+    <button type="button" id="closeMaxWeightForm">Cancel</button>
+   </form>
+   </div>
+   </div>
   </body>
 </html>
