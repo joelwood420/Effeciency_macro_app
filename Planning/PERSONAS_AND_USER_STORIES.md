@@ -11,11 +11,21 @@ Alex is a competitive weightlifter preparing for competitions. They are highly f
 
 ### User Stories
 
-- **As Alex**, I want to quickly log my breakfast's macros so that I can monitor the impact of nutrition on my strength gains.
+- **As Alex**, I want to open the app and immediately access the breakfast macro logging screen, so I can log quickly.
 
-- **As Alex**, I want to record my max bench press each week so I can see how my numbers change alongside my dietary habits.
+- **As Alex**, I want to input individual macro values (protein, carbs, fats) easily in dedicated fields for accurate tracking.
 
-- **As Alex**, I want to view my past entries so I can analyze trends and make data-driven adjustments to my routine.
+- **As Alex**, I want to save my breakfast macros with a single click to avoid time-consuming steps.
+
+- **As Alex**, I want to enter the max bench press weight for the current week to track strength progress.
+
+- **As Alex**, I want to edit or update previously entered max bench press records in case of error or new data.
+
+- **As Alex**, I want to view a calendar or list view showing past macro and bench press entries.
+
+- **As Alex**, I want to see trends or basic analytics comparing macros and strength gains over time.
+
+- **As Alex**, I want to export or download my data for deeper analysis or sharing with a coach.
 
 ---
 
@@ -30,23 +40,29 @@ Casey is a parent with a full-time job and young kids. They want to eat healthie
 
 ### User Stories
 
-- **As Casey**, I want a simple form to log my breakfast macros each morning, even when I'm in a rush, so I can stay accountable to my goals.
+- **As Casey**, I want a minimalist breakfast macro logging form to reduce input time.
 
-- **As Casey**, I want to easily record my max weight lifted when I do have time for workouts so I feel motivated seeing my progress, even with a busy schedule.
+- **As Casey**, I want default or common macro presets to choose from to speed up logging.
 
-- **As Casey**, I want reminders and an easy-to-use interface so logging my nutrition and workouts doesn't add more stress to my day.
+- **As Casey**, I want to save logged macros with minimal taps or clicks.
+
+- **As Casey**, I want a quick way to record max weight lifted without navigating deep menus.
+
+- **As Casey**, I want to receive gentle reminders/notifications to log nutrition and workouts.
+
+- **As Casey**, I want a clean, stress-free interface with clear buttons and large fonts.
+
+- **As Casey**, I want an option to view a simple summary of weekly logged macros and strength progress.
+
+- **As Casey**, I want to be able to skip an entry easily when too busy and resume the next time.
 
 ---
 
 ## Summary
 
-These personas represent the app's target users:
+These personas represent two distinct user types with different priorities:
 
-- **Alex** (Competitive Athlete) - Focused on optimization, data analysis, and consistent progress tracking
-- **Casey** (Busy Individual) - Focused on simplicity, efficiency, and motivation through visible progress
+- **Alex** (Competitive Athlete) - 8 user stories focused on precision, data analysis, detailed tracking, and advanced features
+- **Casey** (Busy Parent) - 8 user stories focused on speed, simplicity, minimal friction, and accessibility
 
-Both personas emphasize the core features:
-- Quick macro logging
-- Max weight tracking
-- Easy data entry and retrieval
-- Trend analysis and motivation
+Total: **16 granular user stories** that represent specific, actionable features the app needs to support both user types effectively.
