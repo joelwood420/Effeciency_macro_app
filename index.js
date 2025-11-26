@@ -3,50 +3,60 @@ const overlay = document.getElementById("overlay");
 const breakfastBtn = document.getElementById("BreakfastMacros");
 const closeBtn = document.getElementById("closeForm");
 
-// Overlay for breakfast macros form
-function showOverlay(element) {
-  element.style.display = "flex";
-}
-
-if (breakfastBtn) {
-  breakfastBtn.addEventListener("click", function () {
-    showOverlay(overlay);
-  });
-}
-
-function hideOverlay() {
-  overlay.style.display = "none";
-}
-
-if (closeBtn) {
-  closeBtn.addEventListener("click", function () {
-    hideOverlay();
-  });
-}
-
-// // Overlay for Max Weight Lifted form
 const maxWeightBtn = document.getElementById("maxWeightBtn");
 const maxWeightOverlay = document.getElementById("MaxWeightoverlay");
 const closeMaxWeightBtn = document.getElementById("closeMaxWeightForm");
+const maxWeightForm = document.getElementById("maxWeightForm");
 
-function showMaxWeightOverlay() {
-  maxWeightOverlay.style.display = "flex";
+// Generic overlay functions that accept elements as arguments
+function showOverlay(overlayElement) {
+  if (overlayElement) {
+    overlayElement.style.display = "flex";
+  }
 }
 
-if (maxWeightBtn) {
-  maxWeightBtn.addEventListener("click", function () {
-    showMaxWeightOverlay();
-  });
+function hideOverlay(overlayElement) {
+  if (overlayElement) {
+    overlayElement.style.display = "none";
+  }
 }
 
-function hideMaxWeightOverlay() {
-  maxWeightOverlay.style.display = "none";
-}
+// Generic function to setup overlay event listeners
+function setupOverlay(triggerBtn, overlayElement, closeBtn, formElement, submitHandler) {
+  
+  if (triggerBtn) {
+    triggerBtn.addEventListener("click", function () {
+      showOverlay(overlayElement);
+    });
+  } else {
+    console.error("Missing trigger button");
+  }
 
-if (closeMaxWeightBtn) {
-  closeMaxWeightBtn.addEventListener("click", function () {
-    hideMaxWeightOverlay();
-  });
+  
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function () {
+      hideOverlay(overlayElement);
+    });
+  } else {
+    console.error("Missing close button");
+  }
+
+  
+  if (overlayElement) {
+    overlayElement.addEventListener("click", function (event) {
+      if (event.target === overlayElement) {
+        hideOverlay(overlayElement);
+      }
+    });
+  }
+
+  if (formElement) {
+    formElement.addEventListener("submit", function(event) {
+      submitHandler(event, overlayElement);
+    });
+  } else {
+    console.error("Missing form element");
+  }
 }
 
 
@@ -69,15 +79,8 @@ function categorizeFats(fat) {
 }
 
 
-// Handle Macro Form Submission
-if (macroForm) {
-  macroForm.addEventListener("submit", handleMacroForm);
-} else {
-  console.error("Missing macroForm element from DOM");
-}
-
-
-function handleMacroForm(event) {
+// Handle Macro Form 
+function handleMacroForm(event, overlayElement) {
   event.preventDefault();
 
   const formData = new FormData(event.target);
@@ -114,8 +117,8 @@ function handleMacroForm(event) {
       `Macros logged successfully! Total calories: ${newEntry.totalCalories}`
     );
 
-    // Hide overlay and reset form after successful submission
-    overlay.style.display = "none";
+    //hideOverlay function
+    hideOverlay(overlayElement);
     event.target.reset();
   } catch (error) {
     console.error("Error saving macro data:", error);
@@ -123,16 +126,8 @@ function handleMacroForm(event) {
   }
 }
 
-// Handle Max Weight Form Submission
-const maxWeightForm = document.getElementById("maxWeightForm");
-
-if (maxWeightForm) {
-  maxWeightForm.addEventListener("submit", handleMaxWeightForm);
-} else {
-  console.error("Missing maxWeightForm element from DOM");
-}
-
-function handleMaxWeightForm(event) {
+// Handle Max Weight Form 
+function handleMaxWeightForm(event, overlayElement) {
   event.preventDefault();
 
   const formData = new FormData(event.target);
@@ -169,11 +164,15 @@ function handleMaxWeightForm(event) {
     console.log("Max weight entry saved:", newEntry);
     alert(`Max weight logged successfully: ${newEntry.maxWeight} kgs`);
 
-    // Hide overlay and reset form after successful submission
-    maxWeightOverlay.style.display = "none";
+    // Use generic hideOverlay function
+    hideOverlay(overlayElement);
     event.target.reset();
   } catch (error) {
     console.error("Error saving max weight data:", error);
     alert("Failed to save max weight data. Please try again.");
   }
 }
+
+// Setup both overlays using the generic function
+setupOverlay(breakfastBtn, overlay, closeBtn, macroForm, handleMacroForm);
+setupOverlay(maxWeightBtn, maxWeightOverlay, closeMaxWeightBtn, maxWeightForm, handleMaxWeightForm);
