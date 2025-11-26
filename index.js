@@ -17,7 +17,7 @@ if (breakfastBtn) {
   breakfastBtn.addEventListener("click", function () {
     showOverlay();
   });
-  }
+}
 
 function hideOverlay() {
   overlay.style.display = "none";
@@ -26,9 +26,8 @@ function hideOverlay() {
 if (closeBtn) {
   closeBtn.addEventListener("click", function () {
     hideOverlay();
- 
- });
-} 
+  });
+}
 
 // Overlay for Max Weight Lifted form
 const maxWeightBtn = document.getElementById("maxWeightBtn");
@@ -119,8 +118,6 @@ function handleMacroForm(event) {
   }
 }
 
-
-
 // Handle Max Weight Form Submission
 const maxWeightForm = document.getElementById("maxWeightForm");
 
@@ -129,7 +126,7 @@ if (maxWeightForm) {
 } else {
   console.error("Missing maxWeightForm element from DOM");
 }
- 
+
 function handleMaxWeightForm(event) {
   event.preventDefault();
 
@@ -147,15 +144,18 @@ function handleMaxWeightForm(event) {
   };
 
   try {
-    const existingData =
-      JSON.parse(localStorage.getItem("maxWeightData") || "[]");
+    const existingData = JSON.parse(
+      localStorage.getItem("maxWeightData") || "[]"
+    );
     const updatedData = Array.isArray(existingData)
       ? [...existingData, newEntry]
       : [newEntry];
 
-//push new data into macroData that has the matching date
+    //push new data into macroData that has the matching date
     const macroData = JSON.parse(localStorage.getItem("macroData") || "[]");
-    const matchingEntry = macroData.find(entry => entry.date === newEntry.date);
+    const matchingEntry = macroData.find(
+      (entry) => entry.date === newEntry.date
+    );
     if (matchingEntry) {
       matchingEntry.maxWeight = newEntry.maxWeight;
       localStorage.setItem("macroData", JSON.stringify(macroData));
@@ -164,11 +164,11 @@ function handleMaxWeightForm(event) {
     console.log("Max weight entry saved:", newEntry);
     alert(`Max weight logged successfully: ${newEntry.maxWeight} kgs`);
 
-      // Hide overlay and reset form after successful submission
-      maxWeightOverlay.style.display = "none";
-      event.target.reset();
-    } catch (error) {
-      console.error("Error saving max weight data:", error);
-      alert("Failed to save max weight data. Please try again.");
-    }
+    // Hide overlay and reset form after successful submission
+    maxWeightOverlay.style.display = "none";
+    event.target.reset();
+  } catch (error) {
+    console.error("Error saving max weight data:", error);
+    alert("Failed to save max weight data. Please try again.");
   }
+}
