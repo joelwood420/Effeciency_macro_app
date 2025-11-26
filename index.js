@@ -24,10 +24,30 @@ if (closeBtn) {
   });
 }
 
-// Overlay for Max Weight Lifted form
+// // Overlay for Max Weight Lifted form
 const maxWeightBtn = document.getElementById("maxWeightBtn");
 const maxWeightOverlay = document.getElementById("MaxWeightoverlay");
 const closeMaxWeightBtn = document.getElementById("closeMaxWeightForm");
+
+function showMaxWeightOverlay() {
+  maxWeightOverlay.style.display = "flex";
+}
+
+if (maxWeightBtn) {
+  maxWeightBtn.addEventListener("click", function () {
+    showMaxWeightOverlay();
+  });
+}
+
+function hideMaxWeightOverlay() {
+  maxWeightOverlay.style.display = "none";
+}
+
+if (closeMaxWeightBtn) {
+  closeMaxWeightBtn.addEventListener("click", function () {
+    hideMaxWeightOverlay();
+  });
+}
 
 
 function categorizeProteinAndCarbs(protein, carbs) {
