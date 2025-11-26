@@ -3,19 +3,14 @@ const overlay = document.getElementById("overlay");
 const breakfastBtn = document.getElementById("BreakfastMacros");
 const closeBtn = document.getElementById("closeForm");
 
-if (macroForm) {
-  macroForm.addEventListener("submit", handleMacroForm);
-} else {
-  console.error("Missing macroForm element from DOM");
+// Overlay for breakfast macros form
+function showOverlay(element) {
+  element.style.display = "flex";
 }
 
-// Overlay for breakfast macros form
-function showOverlay() {
-  overlay.style.display = "flex";
-}
 if (breakfastBtn) {
   breakfastBtn.addEventListener("click", function () {
-    showOverlay();
+    showOverlay(overlay);
   });
 }
 
@@ -34,25 +29,6 @@ const maxWeightBtn = document.getElementById("maxWeightBtn");
 const maxWeightOverlay = document.getElementById("MaxWeightoverlay");
 const closeMaxWeightBtn = document.getElementById("closeMaxWeightForm");
 
-function showMaxWeightOverlay() {
-  maxWeightOverlay.style.display = "flex";
-}
-
-if (maxWeightBtn) {
-  maxWeightBtn.addEventListener("click", function () {
-    showMaxWeightOverlay();
-  });
-}
-
-function hideMaxWeightOverlay() {
-  maxWeightOverlay.style.display = "none";
-}
-
-if (closeMaxWeightBtn) {
-  closeMaxWeightBtn.addEventListener("click", function () {
-    hideMaxWeightOverlay();
-  });
-}
 
 function categorizeProteinAndCarbs(protein, carbs) {
   if (protein > 25 && carbs < 15) {
@@ -71,6 +47,15 @@ function categorizeFats(fat) {
     return "Low Fat";
   }
 }
+
+
+// Handle Macro Form Submission
+if (macroForm) {
+  macroForm.addEventListener("submit", handleMacroForm);
+} else {
+  console.error("Missing macroForm element from DOM");
+}
+
 
 function handleMacroForm(event) {
   event.preventDefault();
