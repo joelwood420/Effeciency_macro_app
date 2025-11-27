@@ -8,7 +8,7 @@ const maxWeightOverlay = document.getElementById("MaxWeightoverlay");
 const closeMaxWeightBtn = document.getElementById("closeMaxWeightForm");
 const maxWeightForm = document.getElementById("maxWeightForm");
 
-// Generic overlay functions that accept elements as arguments
+//overlay functions that accept elements as arguments
 function showOverlay(overlayElement) {
   if (overlayElement) {
     overlayElement.style.display = "flex";
@@ -21,7 +21,7 @@ function hideOverlay(overlayElement) {
   }
 }
 
-// Generic function to setup overlay event listeners
+//function to setup overlay event listeners
 function setupOverlay(triggerBtn, overlayElement, closeBtn, formElement, submitHandler) {
   
   if (triggerBtn) {
@@ -106,18 +106,32 @@ function handleMacroForm(event, overlayElement) {
 
   try {
     const existingData = JSON.parse(localStorage.getItem("macroData") || "[]");
-    const updatedData = Array.isArray(existingData)
-      ? [...existingData, newEntry]
-      : [newEntry];
+    const existingEntryIndex = existingData.findIndex(entry => entry.date === mealDate);
+    
+    let updatedData;
+    let actionMessage;
+    
+    if (existingEntryIndex !== -1) {
+      existingData[existingEntryIndex] = { 
+        ...existingData[existingEntryIndex], // Keep any existing data like maxWeight
+        ...newEntry // Overwrite with new macro data
+      };
+      updatedData = existingData;
+      actionMessage = "updated";
+    } else {
+      // Add new entry
+      updatedData = Array.isArray(existingData) 
+        ? [...existingData, newEntry] 
+        : [newEntry];
+      actionMessage = "logged";
+    }
 
     localStorage.setItem("macroData", JSON.stringify(updatedData));
 
-    console.log("Macro entry saved:", newEntry);
-    alert(
-      `Macros logged successfully! Total calories: ${newEntry.totalCalories}`
-    );
+    console.log(`Macro entry ${actionMessage}:`, newEntry);
+    alert(`Macros ${actionMessage} successfully for ${mealDate}! Total calories: ${newEntry.totalCalories}`);
 
-    //hideOverlay function
+    // Hide overlay and reset form
     hideOverlay(overlayElement);
     event.target.reset();
   } catch (error) {
@@ -125,6 +139,7 @@ function handleMacroForm(event, overlayElement) {
     alert("Failed to save macro data. Please try again.");
   }
 }
+
 
 // Handle Max Weight Form 
 function handleMaxWeightForm(event, overlayElement) {
