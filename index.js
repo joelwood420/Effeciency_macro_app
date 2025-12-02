@@ -8,6 +8,25 @@ const maxWeightOverlay = document.getElementById("MaxWeightoverlay");
 const closeMaxWeightBtn = document.getElementById("closeMaxWeightForm");
 const maxWeightForm = document.getElementById("maxWeightForm");
 
+
+const today = new Date().toISOString().split("T")[0];
+document.addEventListener("DOMContentLoaded", function () {
+  const mealDateInput = document.getElementById("mealDate");
+  if (mealDateInput) {
+    mealDateInput.max = today;
+    mealDateInput.value = today; 
+  }
+  
+  const weightDateInput = document.getElementById("weightDate");
+  if (weightDateInput) {
+    weightDateInput.max = today;
+    weightDateInput.value = today;
+    console.log("Weight date set to:", today);
+  } else {
+    console.log("weightDate input not found");
+  }
+});
+
 //overlay functions that accept elements as arguments
 function showOverlay(overlayElement) {
   if (overlayElement) {
@@ -27,6 +46,14 @@ function setupOverlay(triggerBtn, overlayElement, closeBtn, formElement, submitH
   if (triggerBtn) {
     triggerBtn.addEventListener("click", function () {
       showOverlay(overlayElement);
+      
+      if (overlayElement && overlayElement.id === "MaxWeightoverlay") {
+        const weightDateInput = document.getElementById("weightDate");
+        if (weightDateInput) {
+          weightDateInput.max = today;
+          weightDateInput.value = today;
+        }
+      }
     });
   } else {
     console.error("Missing trigger button");
@@ -113,8 +140,8 @@ function handleMacroForm(event, overlayElement) {
     
     if (existingEntryIndex !== -1) {
       existingData[existingEntryIndex] = { 
-        ...existingData[existingEntryIndex], // Keep any existing data like maxWeight
-        ...newEntry // Overwrite with new macro data
+        ...existingData[existingEntryIndex], 
+        ...newEntry 
       };
       updatedData = existingData;
       actionMessage = "updated";
@@ -147,6 +174,7 @@ function handleMaxWeightForm(event, overlayElement) {
 
   const formData = new FormData(event.target);
   const maxWeight = parseFloat(formData.get("maxWeight")) || 0;
+  const weightDate = formData.get("weightDate") || new Date().toISOString().split("T")[0]; // Use form date or default to today
 
   if (maxWeight <= 0) {
     alert("Please enter a valid positive number for max weight.");
@@ -155,29 +183,34 @@ function handleMaxWeightForm(event, overlayElement) {
 
   const newEntry = {
     maxWeight,
-    date: new Date().toISOString().split("T")[0], // Current date
+    date: weightDate,
   };
 
   try {
-    const existingData = JSON.parse(
-      localStorage.getItem("maxWeightData") || "[]"
-    );
-    const updatedData = Array.isArray(existingData)
-      ? [...existingData, newEntry]
-      : [newEntry];
-
-    //push new data into macroData that has the matching date
+    // Update macroData with max weight for the specified date
     const macroData = JSON.parse(localStorage.getItem("macroData") || "[]");
-    const matchingEntry = macroData.find(
-      (entry) => entry.date === newEntry.date
-    );
-    if (matchingEntry) {
-      matchingEntry.maxWeight = newEntry.maxWeight;
-      localStorage.setItem("macroData", JSON.stringify(macroData));
+    const matchingEntryIndex = macroData.findIndex(entry => entry.date === weightDate);
+    
+    let actionMessage;
+    
+    if (matchingEntryIndex !== -1) {
+      
+      macroData[matchingEntryIndex].maxWeight = maxWeight;
+      actionMessage = "updated";
+    } else {
+    
+
+      macroData.push({
+        date: weightDate,
+        maxWeight: maxWeight
+      });
+      actionMessage = "logged";
     }
 
-    console.log("Max weight entry saved:", newEntry);
-    alert(`Max weight logged successfully: ${newEntry.maxWeight} kgs`);
+    localStorage.setItem("macroData", JSON.stringify(macroData));
+
+    console.log(`Max weight entry ${actionMessage}:`, newEntry);
+    alert(`Max weight ${actionMessage} successfully for ${weightDate}: ${maxWeight} kg`);
 
     // Use generic hideOverlay function
     hideOverlay(overlayElement);
@@ -191,3 +224,6 @@ function handleMaxWeightForm(event, overlayElement) {
 // Setup both overlays using the generic function
 setupOverlay(breakfastBtn, overlay, closeBtn, macroForm, handleMacroForm);
 setupOverlay(maxWeightBtn, maxWeightOverlay, closeMaxWeightBtn, maxWeightForm, handleMaxWeightForm);
+
+
+
