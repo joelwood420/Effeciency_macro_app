@@ -6,56 +6,88 @@
     <title>Sample Page</title>
     <link rel="stylesheet" href="index.css" />
     <script src="index.js" defer></script>
-    <script>
-      const today = new Date().toISOString().split("T")[0];
-      document.addEventListener("DOMContentLoaded", function () {
-        const mealDateInput = document.getElementById("mealDate");
-        mealDateInput.max = today;
-        mealDateInput.value = today; 
-      });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   </head>
 
   <body>
-    <h1>Efficiency</h1>
+    <h1>Efficiency.</h1>
     <h2>See how your breakfast effects your performance</h2>
 
     <button id="BreakfastMacros">Log your breakfast Macros</button>
     <div id="overlay" class="forms" style="display: none">
       <div class="formContainer">
         <form id="macroForm">
-            <h2>Log Breakfast Macros</h2>
+          <h2>Log Breakfast Macros</h2>
           <label for="mealDate">Date:</label>
-          <input type="date" id="mealDate" name="mealDate" required defaultValue={today} /><br />
+          <input
+            type="date"
+            id="mealDate"
+            name="mealDate"
+            required
+            defaultValue="{today}"
+          />
           <label for="protein">Protein (g):</label>
           <input
             type="number"
             id="protein"
             name="protein"
             required
-          /><br /><br />
+          />
           <label for="carbs">Carbohydrates (g):</label>
-          <input type="number" id="carbs" name="carbs" required /><br /><br />
+          <input type="number" id="carbs" name="carbs" required />
           <label for="fat">Fats (g):</label>
-          <input type="number" id="fat" name="fat" required /><br /><br />
+          <input type="number" id="fat" name="fat" required />
           <button type="submit" value="Submit">Submit</button>
           <button type="button" id="closeForm">Cancel</button>
         </form>
       </div>
     </div>
 
-   <button id="maxWeightBtn">Log your Max Weight Lifted</button>
-   <div id="MaxWeightoverlay" class="forms" style="display: none">
-    <div class="formContainer">
-
-    <form id="maxWeightForm">
-        <h2>Log Max Weight Lifted</h2>
-    <label for="maxWeight">Enter Max Weight lifted on bench press (kgs):</label>
-    <input type="number" id="maxWeight" name="maxWeight" required /><br /><br />
-    <button type="submit" value="Submit">Submit</button>
-    <button type="button" id="closeMaxWeightForm">Cancel</button>
-   </form>
-   </div>
-   </div>
+    <button id="maxWeightBtn">Log your Max Weight Lifted</button>
+    <div id="MaxWeightoverlay" class="forms" style="display: none">
+      <div class="formContainer">
+        <form id="maxWeightForm">
+          <h2>Log Max Weight Lifted</h2>
+          <input
+            type="date"
+            id="weightDate"
+            name="weightDate"
+            required
+            defaultValue="{today}"
+          />
+          <label for="maxWeight"
+            >Enter Max Weight lifted on bench press (kgs):</label
+          >
+          <input
+            type="number"
+            id="maxWeight"
+            name="maxWeight"
+            required
+          />
+          <button type="submit" value="Submit">Submit</button>
+          <button type="button" id="closeMaxWeightForm">Cancel</button>
+        </form>
+      </div>
+    </div>
+    <script src="Data_vizualization.js"></script>
+    <table id="dataTable" border="1">
+      <div>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Protein (g)</th>
+            <th>Carbohydrates (g)</th>
+            <th>Fats (g)</th>
+            <th>Calories (kcal)</th>
+            <th>Macro Category</th>
+            <th>Fat Level</th>
+            <th>Max Weight Lifted (kgs)</th>
+          </tr>
+        </thead>
+        <tbody id ="tableBody">
+          <script src="Table.js"></script>
+        </tbody>
+      </div>
+    </table>
   </body>
 </html>
