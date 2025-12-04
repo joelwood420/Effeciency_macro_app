@@ -1,36 +1,254 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    background: #e8eef3;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.header {
+    margin-bottom: 40px;
+    margin-left: 32px;
+}
+
+
+h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a2332;
+}
+
+h2 {
+    font-size: 24px;
+    color: #5a6c7d;
+    font-weight: normal;
+    margin-bottom: 32px;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.leftPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background: white;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-height: fit-content;
+}
+
+.leftPanel p {
+    background: transparent;
+    line-height: 1.6;
+    color: #5a6c7d;
+    font-size: 16px;
+    margin-bottom: 32px;
+    
+
+}
+
+.leftPanel button {
+    background: #1a2332;
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(26, 35, 50, 0.2);
+    
+}
+
+.leftPanel button:hover {
+    background: #2d3e50;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.3);
+}
+
+
+.rightDashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.visualization-container {
+    background: white;
+    padding: 24px;
+    border: none;
+    min-height: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+svg {
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: none;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+thead {
+    background: #1a2332;
+    color: white;
+}
+
+th {
+    padding: 16px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: white;
+}
+
+td {
+    padding: 16px;
+    border-bottom: 1px solid #e8eef3;
+    color: #1a2332;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background-color: #f7fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
 .forms {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000; 
-    display: flex; 
+    background: rgba(26, 35, 50, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .formContainer {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    min-width: 400px;
+    max-width: 500px;
 }
 
-
-svg {
-    background-color: rgb(255, 255, 255);
+.formContainer h2 {
+    color: #1a2332;
+    margin-bottom: 24px;
+    font-size: 24px;
 }
 
-
-#macroForm, #maxWeightForm {
+#macroForm,
+#maxWeightForm {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
 }
 
+#macroForm label,
+#maxWeightForm label {
+    color: #5a6c7d;
+    font-weight: 500;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
 
+#macroForm input,
+#maxWeightForm input {
+    padding: 12px;
+    border: 2px solid #e8eef3;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
 
+#macroForm input:focus,
+#maxWeightForm input:focus {
+    outline: none;
+    border-color: #1a2332;
+}
 
+#macroForm button,
+#maxWeightForm button {
+    padding: 14px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 12px;
+}
+
+#macroForm button[type="submit"],
+#maxWeightForm button[type="submit"] {
+    background: #1a2332;
+    color: white;
+}
+
+#macroForm button[type="submit"]:hover,
+#maxWeightForm button[type="submit"]:hover {
+    background: #2d3e50;
+    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.3);
+}
+
+#macroForm button[type="button"],
+#maxWeightForm button[type="button"] {
+    background: #e8eef3;
+    color: #5a6c7d;
+}
+
+#macroForm button[type="button"]:hover,
+#maxWeightForm button[type="button"]:hover {
+    background: #d4dde5;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .formContainer {
+        min-width: 90%;
+        max-width: 90%;
+    }
+}
 
