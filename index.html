@@ -4,16 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sample Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css" />
     <script src="index.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   </head>
 
   <body>
-    <h1>Efficiency.</h1>
-    <h2>See how your breakfast effects your performance</h2>
+    <div class="header">
+      <h1>Efficiency.</h1>
+      <h2>See how your breakfast effects your performance</h2>
+    </div>
 
-    <button id="BreakfastMacros">Log your breakfast Macros</button>
+    <div class="container">
+      <div class="leftPanel">
+        <p>
+          Track your daily breakfast macros and weight lifting performance to
+          discover the optimal nutrition for maximizing your strength gains.
+          Visualize the relationship between your protein, carbs, and fat intake
+          with your max weight lifted to make data-driven decisions about your
+          diet and training.
+        </p>
+
+        <button class="log-button" id="BreakfastMacros">Log your breakfast Macros</button>
+        <button class="log-button" id="maxWeightBtn">Log your Max Weight Lifted</button>
+      </div>
+
+      <div class="rightDashboard">
+        <div class="visualization-container">
+           <script src="Data_vizualization.js"></script>
+        </div>
+        
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Protein (g)</th>
+              <th>Carbohydrates (g)</th>
+              <th>Fats (g)</th>
+              <th>Calories (kcal)</th>
+              <th>Macro Category</th>
+              <th>Fat Level</th>
+              <th>Max Weight Lifted (kgs)</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <script src="Table.js"></script>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
     <div id="overlay" class="forms" style="display: none">
       <div class="formContainer">
         <form id="macroForm">
@@ -27,12 +71,7 @@
             defaultValue="{today}"
           />
           <label for="protein">Protein (g):</label>
-          <input
-            type="number"
-            id="protein"
-            name="protein"
-            required
-          />
+          <input type="number" id="protein" name="protein" required />
           <label for="carbs">Carbohydrates (g):</label>
           <input type="number" id="carbs" name="carbs" required />
           <label for="fat">Fats (g):</label>
@@ -43,11 +82,12 @@
       </div>
     </div>
 
-    <button id="maxWeightBtn">Log your Max Weight Lifted</button>
+
     <div id="MaxWeightoverlay" class="forms" style="display: none">
       <div class="formContainer">
         <form id="maxWeightForm">
           <h2>Log Max Weight Lifted</h2>
+          <label for="weightDate">Date:</label>
           <input
             type="date"
             id="weightDate"
@@ -58,36 +98,15 @@
           <label for="maxWeight"
             >Enter Max Weight lifted on bench press (kgs):</label
           >
-          <input
-            type="number"
-            id="maxWeight"
-            name="maxWeight"
-            required
-          />
+          <input type="number" id="maxWeight" name="maxWeight" required />
           <button type="submit" value="Submit">Submit</button>
           <button type="button" id="closeMaxWeightForm">Cancel</button>
         </form>
       </div>
     </div>
-    <script src="Data_vizualization.js"></script>
-    <table id="dataTable" border="1">
-      <div>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Protein (g)</th>
-            <th>Carbohydrates (g)</th>
-            <th>Fats (g)</th>
-            <th>Calories (kcal)</th>
-            <th>Macro Category</th>
-            <th>Fat Level</th>
-            <th>Max Weight Lifted (kgs)</th>
-          </tr>
-        </thead>
-        <tbody id ="tableBody">
-          <script src="Table.js"></script>
-        </tbody>
-      </div>
-    </table>
+
+
+   
+    
   </body>
 </html>

@@ -40,7 +40,6 @@ function hideOverlay(overlayElement) {
   }
 }
 
-//function to setup overlay event listeners
 function setupOverlay(triggerBtn, overlayElement, closeBtn, formElement, submitHandler) {
   
   if (triggerBtn) {
@@ -106,7 +105,6 @@ function categorizeFats(fat) {
 }
 
 
-// Handle Macro Form 
 function handleMacroForm(event, overlayElement) {
   event.preventDefault();
 
@@ -158,7 +156,11 @@ function handleMacroForm(event, overlayElement) {
     console.log(`Macro entry ${actionMessage}:`, newEntry);
     alert(`Macros ${actionMessage} successfully for ${mealDate}! Total calories: ${newEntry.totalCalories}`);
 
-    // Hide overlay and reset form
+
+    if (typeof window.renderVisualization === 'function') {
+      window.renderVisualization();
+    }
+
     hideOverlay(overlayElement);
     event.target.reset();
   } catch (error) {
@@ -168,7 +170,6 @@ function handleMacroForm(event, overlayElement) {
 }
 
 
-// Handle Max Weight Form 
 function handleMaxWeightForm(event, overlayElement) {
   event.preventDefault();
 
@@ -187,7 +188,6 @@ function handleMaxWeightForm(event, overlayElement) {
   };
 
   try {
-    // Update macroData with max weight for the specified date
     const macroData = JSON.parse(localStorage.getItem("macroData") || "[]");
     const matchingEntryIndex = macroData.findIndex(entry => entry.date === weightDate);
     
@@ -212,7 +212,6 @@ function handleMaxWeightForm(event, overlayElement) {
     console.log(`Max weight entry ${actionMessage}:`, newEntry);
     alert(`Max weight ${actionMessage} successfully for ${weightDate}: ${maxWeight} kg`);
 
-    // Use generic hideOverlay function
     hideOverlay(overlayElement);
     event.target.reset();
   } catch (error) {
@@ -220,8 +219,6 @@ function handleMaxWeightForm(event, overlayElement) {
     alert("Failed to save max weight data. Please try again.");
   }
 }
-
-// Setup both overlays using the generic function
 setupOverlay(breakfastBtn, overlay, closeBtn, macroForm, handleMacroForm);
 setupOverlay(maxWeightBtn, maxWeightOverlay, closeMaxWeightBtn, maxWeightForm, handleMaxWeightForm);
 
