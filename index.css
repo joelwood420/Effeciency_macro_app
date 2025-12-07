@@ -251,7 +251,7 @@ tbody tr:last-child td {
     background: #d4dde5;
 }
 
-/* Responsive design */
+
 @media (max-width: 1024px) {
     .container {
         grid-template-columns: 1fr;

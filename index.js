@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-//overlay functions that accept elements as arguments
+
 function showOverlay(overlayElement) {
   if (overlayElement) {
     overlayElement.style.display = "flex";
@@ -146,7 +146,7 @@ function handleMacroForm(event, overlayElement) {
       updatedData = existingData;
       actionMessage = "updated";
     } else {
-      // Add new entry
+     
       updatedData = Array.isArray(existingData) 
         ? [...existingData, newEntry] 
         : [newEntry];
@@ -158,7 +158,6 @@ function handleMacroForm(event, overlayElement) {
     console.log(`Macro entry ${actionMessage}:`, newEntry);
     alert(`Macros ${actionMessage} successfully for ${mealDate}! Total calories: ${newEntry.totalCalories}`);
 
-    // Update all visualizations
     updateAllVisualizations();
 
     hideOverlay(overlayElement);

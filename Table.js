@@ -55,7 +55,7 @@ window.addDataToTable = function() {
   console.log(`Table populated with ${tableData.length} entries`);
 };
 
-// Call the function when page loads
+
 document.addEventListener('DOMContentLoaded', function() {
   window.addDataToTable();
 });
