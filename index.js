@@ -1,5 +1,5 @@
 const macroForm = document.getElementById("macroForm");
-const overlay = document.getElementById("overlay");
+const breakfastOverlay = document.getElementById("overlay");
 const breakfastBtn = document.getElementById("BreakfastMacros");
 const closeBtn = document.getElementById("closeForm");
 
@@ -114,7 +114,8 @@ function handleMacroForm(event, overlayElement) {
   const carbs = parseFloat(formData.get("carbs")) || 0;
   const fat = parseFloat(formData.get("fat")) || 0;
 
-  if (protein < 0 || carbs < 0 || fat < 0) {
+  const hasValidMacros = protein >= 0 && carbs >= 0 && fat >= 0;
+  if (!hasValidMacros) {
     alert("Please enter valid positive numbers for all macros.");
     return;
   }
@@ -132,11 +133,12 @@ function handleMacroForm(event, overlayElement) {
   try {
     const existingData = JSON.parse(localStorage.getItem("macroData") || "[]");
     const existingEntryIndex = existingData.findIndex(entry => entry.date === mealDate);
+    const hasEntryForDate = existingEntryIndex !== -1;
     
     let updatedData;
     let actionMessage;
     
-    if (existingEntryIndex !== -1) {
+    if (hasEntryForDate) {
       existingData[existingEntryIndex] = { 
         ...existingData[existingEntryIndex], 
         ...newEntry 
@@ -156,10 +158,8 @@ function handleMacroForm(event, overlayElement) {
     console.log(`Macro entry ${actionMessage}:`, newEntry);
     alert(`Macros ${actionMessage} successfully for ${mealDate}! Total calories: ${newEntry.totalCalories}`);
 
-
-    if (typeof window.renderVisualization === 'function') {
-      window.renderVisualization();
-    }
+    // Update all visualizations
+    updateAllVisualizations();
 
     hideOverlay(overlayElement);
     event.target.reset();
@@ -175,9 +175,10 @@ function handleMaxWeightForm(event, overlayElement) {
 
   const formData = new FormData(event.target);
   const maxWeight = parseFloat(formData.get("maxWeight")) || 0;
-  const weightDate = formData.get("weightDate") || new Date().toISOString().split("T")[0]; // Use form date or default to today
+  const weightDate = formData.get("weightDate") || new Date().toISOString().split("T")[0];
 
-  if (maxWeight <= 0) {
+  const isValidWeight = maxWeight > 0;
+  if (!isValidWeight) {
     alert("Please enter a valid positive number for max weight.");
     return;
   }
@@ -190,11 +191,11 @@ function handleMaxWeightForm(event, overlayElement) {
   try {
     const macroData = JSON.parse(localStorage.getItem("macroData") || "[]");
     const matchingEntryIndex = macroData.findIndex(entry => entry.date === weightDate);
+    const hasExistingEntryForDate = matchingEntryIndex !== -1;
     
     let actionMessage;
     
-    if (matchingEntryIndex !== -1) {
-      
+    if (hasExistingEntryForDate) {
       macroData[matchingEntryIndex].maxWeight = maxWeight;
       actionMessage = "updated";
     } else {
@@ -212,6 +213,9 @@ function handleMaxWeightForm(event, overlayElement) {
     console.log(`Max weight entry ${actionMessage}:`, newEntry);
     alert(`Max weight ${actionMessage} successfully for ${weightDate}: ${maxWeight} kg`);
 
+    
+    updateAllVisualizations();
+
     hideOverlay(overlayElement);
     event.target.reset();
   } catch (error) {
@@ -219,8 +223,20 @@ function handleMaxWeightForm(event, overlayElement) {
     alert("Failed to save max weight data. Please try again.");
   }
 }
-setupOverlay(breakfastBtn, overlay, closeBtn, macroForm, handleMacroForm);
+setupOverlay(breakfastBtn, breakfastOverlay, closeBtn, macroForm, handleMacroForm);
 setupOverlay(maxWeightBtn, maxWeightOverlay, closeMaxWeightBtn, maxWeightForm, handleMaxWeightForm);
+
+
+function updateAllVisualizations() {
+
+  if (typeof window.renderVisualization === 'function') {
+    window.renderVisualization();
+  }
+  
+  if (typeof addDataToTable === 'function') {
+    addDataToTable();
+  }
+}
 
 
 
