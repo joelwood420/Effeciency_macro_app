@@ -111,11 +111,28 @@ table {
     border: none;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: block;
 }
 
 thead {
     background: #1a2332;
     color: white;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+tbody {
+    display: block;
+    height: 160px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 th {

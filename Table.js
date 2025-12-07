@@ -1,11 +1,12 @@
 
 
-function addDataToTable() {
+// Make function globally available
+window.addDataToTable = function() {
   const tableBody = document.getElementById('tableBody');
   const tableData = JSON.parse(localStorage.getItem('macroData')) || [];
 
   if (!tableData || tableData.length === 0) {
-    tableBody.innerHTML = "<tr><td colspan='5'>No data found</td></tr>";
+    tableBody.innerHTML = "<tr><td colspan='8'>No data found</td></tr>";
     return;
   }
 
@@ -52,9 +53,9 @@ function addDataToTable() {
   });
   
   console.log(`Table populated with ${tableData.length} entries`);
-}
+};
 
 // Call the function when page loads
 document.addEventListener('DOMContentLoaded', function() {
-  addDataToTable();
+  window.addDataToTable();
 });
