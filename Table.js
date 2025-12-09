@@ -1,6 +1,5 @@
 
 
-// Make function globally available
 window.addDataToTable = function() {
   const tableBody = document.getElementById('tableBody');
   const tableData = JSON.parse(localStorage.getItem('macroData')) || [];
@@ -10,9 +9,12 @@ window.addDataToTable = function() {
     return;
   }
 
+  
+  const sortedData = tableData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
   tableBody.innerHTML = '';
 
-  tableData.forEach(entry => {
+  sortedData.forEach(entry => {
     const row = document.createElement('tr');
 
     const dateCell = document.createElement('td');
@@ -52,7 +54,7 @@ window.addDataToTable = function() {
     tableBody.appendChild(row);
   });
   
-  console.log(`Table populated with ${tableData.length} entries`);
+  console.log(`Table populated with ${sortedData.length} entries, newest first`);
 };
 
 
